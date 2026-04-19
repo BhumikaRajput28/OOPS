@@ -1,0 +1,90 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class OOPSBannerUC7 {
+
+    // Inner static class to hold character and pattern
+    static class CharacterPattern {
+        private char character;
+        private String[] pattern;
+
+        public CharacterPattern(char character, String[] pattern) {
+            this.character = character;
+            this.pattern = pattern;
+        }
+
+        public char getCharacter() {
+            return character;
+        }
+
+        public String[] getPattern() {
+            return pattern;
+        }
+    }
+
+    // Static map to store all patterns
+    static class CharacterPatternMap {
+        private static Map<Character, CharacterPattern> map = new HashMap<>();
+
+        static {
+            map.put('O', new CharacterPattern('O', new String[]{
+                    " *** ",
+                    "*   *",
+                    "*   *",
+                    "*   *",
+                    " *** "
+            }));
+
+            map.put('P', new CharacterPattern('P', new String[]{
+                    "**** ",
+                    "*   *",
+                    "**** ",
+                    "*    ",
+                    "*    "
+            }));
+
+            map.put('S', new CharacterPattern('S', new String[]{
+                    " ****",
+                    "*    ",
+                    " *** ",
+                    "    *",
+                    "**** "
+            }));
+        }
+
+        public static CharacterPattern getPattern(char ch) {
+            return map.get(ch);
+        }
+    }
+
+    public static void main(String[] args) {
+
+        String word = "OOPS";
+        int height = 5;
+
+        StringBuilder[] output = new StringBuilder[height];
+
+        // Initialize rows
+        for (int i = 0; i < height; i++) {
+            output[i] = new StringBuilder();
+        }
+
+        // Build banner
+        for (char ch : word.toCharArray()) {
+            CharacterPattern cp = CharacterPatternMap.getPattern(ch);
+
+            if (cp != null) {
+                String[] pattern = cp.getPattern();
+
+                for (int i = 0; i < height; i++) {
+                    output[i].append(pattern[i]).append("  ");
+                }
+            }
+        }
+
+        // Print banner
+        for (StringBuilder line : output) {
+            System.out.println(line);
+        }
+    }
+}
